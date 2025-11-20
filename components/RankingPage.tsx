@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { players, rankings } from "@/app/lib/data";
 import Link from "next/link";
 
@@ -19,6 +20,23 @@ const rankColors: Record<number, string> = {
   4: "#cd7f32",   // 铜
 };
 
+// ⭐ 激励名言
+const quotes = [
+  "勒万为了在二番战击败恶魔斯，每天训练6小时",
+  "德文12年夺得世界冠军后重伤，但他花了十年重返世界第二",
+  "“不用怕被翻腕，只要你的信念不折。” ——恶魔斯",
+  "“当你感到极限，那就是腕力定义你的时候，放弃还是拼尽一切” ——哈钦斯",
+  "“最强的对手不是别人，是你心中说不行的声音” ——丹尼斯",
+  "“保持强壮，保持巨大” ——德文",
+  "别担心硬件，你远远没到你的上限",
+  "金井和我们是同人种",
+  "德文在高中甚至不是全班最强",
+  "“成为伟大的腕力运动员有两条规则，第一永远热爱，第二永不放弃。” ——德文",
+  "“我小时候也是哑铃都拿不起的小孩，现在我却战无不胜。” ——勒万",
+  "“相信自己比什么都重要，我从不考虑比赛输赢，我早已成为胜利的代名词” ——勒万",
+  "“我只知道哪怕输也要让对手赢得不轻松，我喜欢死战不退的感觉。” ——马特"
+];
+
 interface Props {
   hand: "left" | "right";
   weight: "65kg" | "75kg" | "85kg" | "open";
@@ -35,8 +53,16 @@ export default function RankingPage({ hand, weight }: Props) {
     "65kg": "65kg",
     "75kg": "75kg",
     "85kg": "85kg",
-    "open": "无差别",
-  };
+    open: "无差别",
+  } as const;
+
+  // ⭐ 修复 hydration mismatch：客户端挂载后再随机
+  const [quote, setQuote] = useState("");
+
+  useEffect(() => {
+    const q = quotes[Math.floor(Math.random() * quotes.length)];
+    setQuote(q);
+  }, []);
 
   return (
     <div style={containerStyle}>
@@ -121,6 +147,24 @@ export default function RankingPage({ hand, weight }: Props) {
             </div>
           );
         })}
+      </div>
+
+      {/* ⭐ 随机语句展示框（客户端渲染） */}
+      <div
+        style={{
+          maxWidth: "550px",
+          margin: "25px auto 0",
+          padding: "16px 20px",
+          background: "#fff4e6",
+          borderRadius: "12px",
+          boxShadow: "0 3px 10px rgba(0,0,0,0.08)",
+          fontSize: "18px",
+          textAlign: "center",
+          fontWeight: 600,
+          color: "#8a4b00",
+        }}
+      >
+        {quote || " "}
       </div>
     </div>
   );

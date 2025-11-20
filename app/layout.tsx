@@ -1,20 +1,20 @@
 import "./globals.css";
 import Navbar from "../components/Navbar";
 import HideNavbarWrapper from "../components/HideNavbarWrapper";
+import ClientPaddingController from "../components/ClientPaddingController";
+import { ReactNode } from "react";
 
 export const metadata = {
   title: "腕力实力排名网站",
   description: "Armwrestling Rankings and Match Records",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="zh">
-      <body style={{ margin: 0 }}>
-
-        {/* 客户端判断是否隐藏 */}
+      <body style={{ margin: 0, padding: 0 }}>
+        {/* 顶部 Banner + Navbar */}
         <HideNavbarWrapper>
-          {/* 顶部横幅 */}
           <header
             style={{
               width: "100%",
@@ -30,7 +30,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             }}
           />
 
-          {/* 导航栏 */}
           <nav
             style={{
               position: "fixed",
@@ -44,11 +43,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </nav>
         </HideNavbarWrapper>
 
-        {/* 内容区域：根据是否显示 Navbar 自动撑开  */}
-        <main style={{ padding: "20px", paddingTop: "160px" }}>
-          {children}
-        </main>
-
+        {/* paddingTop 会自动根据页面类型决定 */}
+        <ClientPaddingController>{children}</ClientPaddingController>
       </body>
     </html>
   );
