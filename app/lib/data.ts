@@ -23,7 +23,7 @@ export const players = [
   { id: "18", name: "胡含旭", country: "中国",city: "南昌" },
   { id: "19", name: "马超", country: "中国",city: "南昌" },
   { id: "20", name: "梁健平", country: "中国",city: "南昌" },
-  { id: "21", name: "徐江顺", country: "中国",city: "南昌" },
+  { id: "21", name: "徐江顺", country: "中国",city: "九江" },
   { id: "22", name: "朱志霖", country: "中国",city: "南昌" },
   { id: "23", name: "叶若", country: "中国",city: "南昌" },
   { id: "24", name: "张文毅", country: "中国",city: "南昌" },
