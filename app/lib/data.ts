@@ -6,7 +6,7 @@ export const players = [
   { id: "1", name: "小凯", country: "中国",city: "南昌" },
   { id: "2", name: "阿杰", country: "中国",city: "南昌" },
   { id: "3", name: "小杜", country: "中国",city: "南昌" },
-  { id: "4", name: "比小迪", country: "中国",city: "重庆" },
+  { id: "4", name: "比小迪", country: "中国",city: "海南" },
   { id: "5", name: "小果", country: "中国",city: "南昌" },
   { id: "6", name: "潘文兵", country: "中国",city: "婺源" },
   { id: "7", name: "徐日成", country: "中国",city: "南昌" },
@@ -20,7 +20,7 @@ export const players = [
   { id: "15", name: "乌兰发", country: "中国",city: "南昌" },
   { id: "16", name: "项龙", country: "中国",city: "南昌" },
   { id: "17", name: "程鑫", country: "中国",city: "南昌" },
-  { id: "18", name: "胡含旭", country: "中国",city: "南昌" },
+  { id: "18", name: "胡含旭", country: "中国",city: "九江" },
   { id: "19", name: "马超", country: "中国",city: "南昌" },
   { id: "20", name: "梁健平", country: "中国",city: "南昌" },
   { id: "21", name: "徐江顺", country: "中国",city: "九江" },
@@ -28,9 +28,10 @@ export const players = [
   { id: "23", name: "叶若", country: "中国",city: "南昌" },
   { id: "24", name: "张文毅", country: "中国",city: "南昌" },
   { id: "25", name: "朱军强", country: "中国",city: "南昌" },
-  { id: "26", name: "李林炜", country: "中国",city: "南昌" },
+  { id: "26", name: "李林炜", country: "中国",city: "九江" },
   { id: "27", name: "姚庚飞", country: "中国",city: "南昌" },
   { id: "28", name: "子俊", country: "中国",city: "南昌" },
+  { id: "29", name: "短神", country: "中国",city: "南昌" },
 ];
 
 
@@ -42,13 +43,13 @@ export const rankings: Record<
     "65kg": ["8", "11", "3", "12", "13", "14"],
     "75kg": ["1", "19", "5", "2", "20", "17"],
     "85kg": [],
-    "open": ["1", "7", "25", "28", "26", "27", "24"],
+    "open": ["1", "7", "25", "28", "26", "27", "24", "29"],
   },
   right: {
     "65kg": ["3", "4", "6", "8", "9", "10"],
     "75kg": ["2", "15", "16", "17", "18", "1"],
     "85kg": [],
-    "open": ["7", "21", "22", "23", "28", "24"],
+    "open": ["7", "21", "22", "23", "28", "24", "29"],
   },
 };
 
