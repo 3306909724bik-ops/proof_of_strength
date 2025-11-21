@@ -1,3 +1,7 @@
+export type Hand = "left" | "right";
+export type Weight = "65kg" | "75kg" | "85kg" | "open";
+
+
 export const players = [
   { id: "1", name: "小凯", country: "中国",city: "南昌" },
   { id: "2", name: "阿杰", country: "中国",city: "南昌" },
@@ -29,7 +33,11 @@ export const players = [
   { id: "28", name: "子俊", country: "中国",city: "南昌" },
 ];
 
-export const rankings = {
+
+export const rankings: Record<
+  Hand,
+  Record<Weight, string[]>
+> = {
   left: {
     "65kg": ["8", "11", "3", "12", "13", "14"],
     "75kg": ["1", "19", "5", "2", "20", "17"],
