@@ -5,7 +5,7 @@ import ClientPaddingController from "../components/ClientPaddingController";
 import { ReactNode } from "react";
 
 export const metadata = {
-  title: "腕力实力排名网站",
+  title: "力之证腕力单挑赛官方网站",
   description: "Armwrestling Rankings and Match Records",
 };
 
