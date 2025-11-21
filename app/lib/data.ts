@@ -59,8 +59,8 @@ export const matches = [
     player1: "1",
     player2: "7",
     winner: "1",
-    date: "2025-01-10",
-    score: "3-1",
+    date: "2025-11-15",
+    score: "2-0",
     video: "/videos/XiaoKai_vs_Xuricheng.mp4"
   },
   
