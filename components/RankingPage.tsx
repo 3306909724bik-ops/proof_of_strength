@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { players, rankings } from "@/app/lib/data";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 // 字体与全局样式
 const containerStyle: React.CSSProperties = {
@@ -20,7 +20,7 @@ const rankColors: Record<number, string> = {
   4: "#cd7f32",   // 铜
 };
 
-// ⭐ 激励名言
+// 激励语
 const quotes = [
   "勒万为了在二番战击败恶魔斯，每天训练6小时",
   "德文12年夺得世界冠军后重伤，但他花了十年重返世界第二",
@@ -54,21 +54,42 @@ export default function RankingPage({ hand, weight }: Props) {
     "75kg": "75kg",
     "85kg": "85kg",
     open: "无差别",
-  } as const;
+  };
 
-  // ⭐ 修复 hydration mismatch：客户端挂载后再随机
+  // 避免 hydration mismatch
   const [quote, setQuote] = useState("");
 
   useEffect(() => {
-    const q = quotes[Math.floor(Math.random() * quotes.length)];
-    setQuote(q);
-  }, []);
+    setQuote(quotes[Math.floor(Math.random() * quotes.length)]);
+  }, [hand, weight]);
 
   return (
-    <div style={containerStyle}>
+    <div
+      style={{
+        ...containerStyle,
+        minHeight: "calc(100vh - 160px)", 
+      }}
+    >
       <h1 style={{ color: "#000", marginBottom: "30px", fontSize: "32px" }}>
         {hand === "left" ? "左手" : "右手"} · {weightName[weight]} 排名
       </h1>
+
+      {/* ⭐ 新增：提示语放到排行榜卡片上方 */}
+      <div
+        style={{
+          fontSize: "18px",
+          fontWeight: 600,
+          marginBottom: "16px",
+          background: "#fff7e6",
+          padding: "8px 18px",
+          borderRadius: "10px",
+          display: "inline-block",
+          border: "1px solid #f2c48d",
+          boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+        }}
+      >
+        点击选手名字查看选手信息
+      </div>
 
       {/* 排行榜卡片 */}
       <div
@@ -149,7 +170,7 @@ export default function RankingPage({ hand, weight }: Props) {
         })}
       </div>
 
-      {/* ⭐ 随机语句展示框（客户端渲染） */}
+      {/* 激励语句 */}
       <div
         style={{
           maxWidth: "550px",
@@ -157,14 +178,14 @@ export default function RankingPage({ hand, weight }: Props) {
           padding: "16px 20px",
           background: "#fff4e6",
           borderRadius: "12px",
-          boxShadow: "0 3px 10px rgba(0,0,0,0.08)",
-          fontSize: "18px",
-          textAlign: "center",
-          fontWeight: 600,
-          color: "#8a4b00",
+          fontSize: "17px",
+          fontWeight: 500,
+          color: "#222",
+          border: "1px solid #f0d2b0",
+          boxShadow: "0 2px 10px rgba(0,0,0,0.06)",
         }}
       >
-        {quote || " "}
+        {quote}
       </div>
     </div>
   );
