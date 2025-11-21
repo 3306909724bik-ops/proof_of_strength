@@ -6,7 +6,7 @@ export const players = [
   { id: "1", name: "小凯", country: "中国",city: "南昌" },
   { id: "2", name: "阿杰", country: "中国",city: "南昌" },
   { id: "3", name: "小杜", country: "中国",city: "南昌" },
-  { id: "4", name: "比小迪", country: "中国",city: "南昌" },
+  { id: "4", name: "比小迪", country: "中国",city: "重庆" },
   { id: "5", name: "小果", country: "中国",city: "南昌" },
   { id: "6", name: "潘文兵", country: "中国",city: "婺源" },
   { id: "7", name: "徐日成", country: "中国",city: "南昌" },
