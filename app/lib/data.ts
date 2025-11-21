@@ -53,7 +53,7 @@ export const matches = [
     winner: "1",
     date: "2025-01-10",
     score: "3-1",
-    video: "/videos/hu_yunxuan_vs_fanminghui.mp4"
+    video: "/videos/XiaoKai_vs_Xuricheng.mp4"
   },
   
 ];
