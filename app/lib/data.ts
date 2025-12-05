@@ -64,7 +64,7 @@ export const rankings: Record<
 
 export const matches = [
   {
-    id: "1",
+    id: "0",
     event:"pos0",
     player1: "1",
     player2: "7",
@@ -173,5 +173,5 @@ export const matches = [
 ];
 
 /*git add .*/
-/*git commit -m "update player pages UI"*/
+/*git commit -m "update ]"*/
 /*git push*/
