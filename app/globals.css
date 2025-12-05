@@ -12,13 +12,7 @@ html, body {
   --foreground: #171717;
 }
 
-/* 禁止自动黑暗模式 */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #ffffff;   /* 强制还是白色 */
-    --foreground: #171717;   /* 强制字体还是深色 */
-  }
-}
+
 
 body {
   background: var(--background);
