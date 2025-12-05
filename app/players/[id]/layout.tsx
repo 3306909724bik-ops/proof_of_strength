@@ -3,10 +3,11 @@
 import Link from "next/link";
 import { players, rankings } from "@/app/lib/data";
 import { useSearchParams, useParams, usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 // 排名颜色映射
 const rankColors: Record<number, string> = {
-  1: "#ff0004ff", 
+  1: "#ff0004ff",
   2: "#d4af37",
   3: "#C0C0C0",
   4: "#cd7f32",
@@ -38,37 +39,75 @@ export default function PlayerLayout({ children }: { children: React.ReactNode }
 
   const bestRank = getBestRank(player.id);
   const nameBg = bestRank <= 4 ? rankColors[bestRank] : "#fde8c8";
-  const backUrl = `/${hand}/${weight}`;
+
+  // ------------------------------------------------------------
+  // ⭐ 新的 — 来源栈 (stack)
+  // ------------------------------------------------------------
+  const [returnUrl, setReturnUrl] = useState<string>("");
+
+  useEffect(() => {
+    const ref = document.referrer;
+    const isPlayerPage = ref.includes("/players/");
+    
+    // 读取来源栈
+    const stackJson = sessionStorage.getItem("playerBackStack");
+    const stack: string[] = stackJson ? JSON.parse(stackJson) : [];
+
+    // 若来源不是 player 子页面，则 push 到栈
+    if (ref && !isPlayerPage) {
+      stack.push(ref);
+      sessionStorage.setItem("playerBackStack", JSON.stringify(stack));
+    }
+
+    // 返回时取栈顶
+    const top = stack.length > 0 ? stack[stack.length - 1] : `/${hand}/${weight}`;
+    setReturnUrl(top);
+  }, []);
+
+  // 点击返回按钮 → 弹出栈顶
+  const handleBack = () => {
+    const stackJson = sessionStorage.getItem("playerBackStack");
+    const stack: string[] = stackJson ? JSON.parse(stackJson) : [];
+
+    if (stack.length > 0) {
+      const last = stack.pop();
+      sessionStorage.setItem("playerBackStack", JSON.stringify(stack));
+      window.location.href = last!;  // 跳回来源
+    } else {
+      window.location.href = `/${hand}/${weight}`;
+    }
+  };
 
   return (
     <div
       style={{
         maxWidth: "900px",
-        margin: "10px auto 0 auto",      // ★ 几乎贴顶
+        margin: "10px auto 0 auto",
         background: "white",
         borderRadius: "20px",
-        boxShadow: "0 5px 25px rgba(0,0,0,0.12)",   // ★ 专业卡片阴影
+        boxShadow: "0 5px 25px rgba(0,0,0,0.12)",
         padding: "25px",
         minHeight: "92vh",
         position: "relative",
       }}
     >
-      {/* 返回按钮 */}
-      <Link
-        href={backUrl}
+
+      {/* ← 返回按钮（使用 handleBack） */}
+      <button
+        onClick={handleBack}
         style={{
-          display: "inline-block",
           padding: "8px 16px",
           fontSize: "15px",
           background: "#222",
           color: "white",
           borderRadius: "8px",
-          textDecoration: "none",
+          border: "none",
+          cursor: "pointer",
           marginBottom: "20px",
         }}
       >
-        ← 返回排名
-      </Link>
+        ← 返回
+      </button>
 
       {/* 顶部名字条 */}
       <div
@@ -90,7 +129,7 @@ export default function PlayerLayout({ children }: { children: React.ReactNode }
         {player.name}
       </div>
 
-      {/* Sticky Tabs */}
+      {/* Tabs */}
       <nav
         style={{
           position: "sticky",
@@ -131,7 +170,7 @@ export default function PlayerLayout({ children }: { children: React.ReactNode }
         </div>
       </nav>
 
-      {/* 内容（info / matches / videos） */}
+      {/* 内容区域 */}
       <div style={{ paddingBottom: "40px" }}>{children}</div>
     </div>
   );

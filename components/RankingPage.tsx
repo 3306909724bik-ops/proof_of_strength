@@ -70,7 +70,7 @@ export default function RankingPage({ hand, weight }: Props) {
         minHeight: "calc(100vh - 160px)", 
       }}
     >
-      <h1 style={{ color: "#000", marginBottom: "30px", fontSize: "32px" }}>
+      <h1 style={{ color: "#ff0000ff", marginBottom: "30px", fontSize: "32px" }}>
         {hand === "left" ? "左手" : "右手"} · {weightName[weight]} 排名
       </h1>
 
@@ -96,7 +96,7 @@ export default function RankingPage({ hand, weight }: Props) {
         style={{
           maxWidth: "550px",
           margin: "0 auto",
-          background: "#ffffffcc",
+          background: "#ffffffff",
           borderRadius: "14px",
           boxShadow: "0 4px 15px rgba(0,0,0,0.1)",
           padding: "20px",

@@ -130,6 +130,25 @@ export default function Navbar() {
             </Link>
           );
         })}
+        {/* 赛事按钮 */}
+<Link
+  href="/events"
+  style={{
+    color: pathname.startsWith("/events") ? "#d4af37" : "white",
+    fontWeight: pathname.startsWith("/events") ? "bold" : "normal",
+    textDecoration: "none",
+    borderBottom:
+      pathname.startsWith("/events")
+        ? "3px solid #d4af37"
+        : "3px solid transparent",
+    paddingBottom: "4px",
+  }}
+>
+  赛事
+</Link>
+
+<span style={{ color: "#444" }}>|</span>
+
       </div>
     </nav>
   );

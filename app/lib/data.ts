@@ -32,6 +32,14 @@ export const players = [
   { id: "27", name: "姚庚飞", country: "中国",city: "南昌" },
   { id: "28", name: "子俊", country: "中国",city: "南昌" },
   { id: "29", name: "短神", country: "中国",city: "南昌" },
+  { id: "30", name: "周行", country: "中国",city: "南昌" },
+  { id: "31", name: "周先生", country: "中国",city: "南昌" },
+  { id: "32", name: "舒保林", country: "中国",city: "南昌" },
+  { id: "33", name: "斗腕仙道", country: "中国",city: "南昌" },
+  { id: "34", name: "华哥", country: "中国",city: "南昌" },
+  { id: "35", name: "望春风", country: "中国",city: "南昌" },
+  { id: "36", name: "熊逸鸣", country: "中国",city: "南昌" },
+  { id: "37", name: "周仓", country: "中国",city: "南昌" },
 ];
 
 
@@ -57,6 +65,7 @@ export const rankings: Record<
 export const matches = [
   {
     id: "1",
+    event:"pos0",
     player1: "1",
     player2: "7",
     winner: "1",
@@ -64,7 +73,103 @@ export const matches = [
     score: "2-0",
     video: "/videos/XiaoKai_vs_Xuricheng.mp4"
   },
-  
+  {
+    id: "1",
+    event: "pos1",
+    player1: "31", // 周先生
+    player2: "32", // 舒保林
+    date: "2025-12-13",
+    weight: "75kg",
+    hand: "右手",
+    format: "3局2胜",
+    winner: "",
+    score: "",
+    video: "",
+  },
+
+  {
+    id: "2",
+    event: "pos1",
+    player1: "4",  // 比小迪
+    player2: "33", // 斗腕仙道
+    date: "2025-12-13",
+    weight: "65kg",
+    hand: "右手",
+    format: "3局2胜",
+    winner: "",
+    score: "",
+    video: "",
+  },
+
+  {
+    id: "3",
+    event: "pos1",
+    player1: "5",  // 小果
+    player2: "3",  // 小杜
+    date: "2025-12-13",
+    weight: "75kg",
+    hand: "右手",
+    format: "5局3胜（打满五局）",
+    winner: "",
+    score: "",
+    video: "",
+  },
+
+  {
+    id: "4",
+    event: "pos1",
+    player1: "5",  // 小果
+    player2: "8",  // 程宽
+    date: "2025-12-13",
+    weight: "75kg",
+    hand: "左手",
+    format: "5局3胜",
+    winner: "",
+    score: "",
+    video: "",
+  },
+
+  {
+    id: "5",
+    event: "pos1",
+    player1: "34", // 华哥
+    player2: "35", // 望春风
+    date: "2025-12-13",
+    weight: "85kg",
+    hand: "右手",
+    format: "5局3胜",
+    winner: "",
+    score: "",
+    video: "",
+  },
+
+  {
+    id: "6",
+    event: "pos1",
+    player1: "35", // 望春风
+    player2: "36", // 熊逸鸣（熊神）
+    date: "2025-12-13",
+    weight: "85kg",
+    hand: "左手",
+    format: "5局3胜",
+    winner: "",
+    score: "",
+    video: "",
+  },
+
+  {
+    id: "7",
+    event: "pos1",
+    player1: "30", // 周行
+    player2: "37", // 周仓
+    date: "2025-12-13",
+    weight: "85kg",
+    hand: "右手",
+    format: "5局3胜",
+    winner: "",
+    score: "",
+    video: "",
+  },
 ];
 
 /*git add .*/
