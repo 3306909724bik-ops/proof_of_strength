@@ -40,6 +40,7 @@ export const players = [
   { id: "35", name: "望春风", country: "中国",city: "南昌" },
   { id: "36", name: "熊逸鸣", country: "中国",city: "南昌" },
   { id: "37", name: "周仓", country: "中国",city: "南昌" },
+  { id: "38", name: "比季迪", country: "中国",city: "南昌" },
 ];
 
 
@@ -77,11 +78,11 @@ export const matches = [
     id: "1",
     event: "pos1",
     player1: "31", // 周先生
-    player2: "32", // 舒保林
+    player2: "8", // 程宽
     date: "2025-12-13",
     weight: "75kg",
     hand: "右手",
-    format: "3局2胜",
+    format: "5局3胜",
     winner: "",
     score: "",
     video: "",
@@ -91,7 +92,7 @@ export const matches = [
     id: "2",
     event: "pos1",
     player1: "4",  // 比小迪
-    player2: "33", // 斗腕仙道
+    player2: "38", // 比季迪
     date: "2025-12-13",
     weight: "65kg",
     hand: "右手",
