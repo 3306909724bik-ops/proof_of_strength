@@ -15,7 +15,7 @@ const containerStyle: React.CSSProperties = {
 // 前 4 名颜色
 const rankColors: Record<number, string> = {
   1: "#ff0004ff", // 冠军
-  2: "#d4af37",   // 亚军（金色）
+  2: "#FFD700",   // 亚军（金色）
   3: "#C0C0C0",   // 白银
   4: "#cd7f32",   // 铜
 };
