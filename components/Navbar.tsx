@@ -16,14 +16,11 @@ export default function Navbar() {
   const hands = ["left", "right"];
   const weights = ["65kg", "75kg", "85kg", "open"];
 
+  // 解析当前 URL 状态
   const parts = pathname.split("/").filter(Boolean);
   const currentHand = parts[0] || "";
   const currentWeight = parts[1] || "open";
-
-  const safeHand =
-    currentHand === "left" || currentHand === "right"
-      ? currentHand
-      : "right";
+  const safeHand = currentHand === "left" || currentHand === "right" ? currentHand : "right";
 
   return (
     <nav
@@ -33,17 +30,11 @@ export default function Navbar() {
         color: "#fff",
         borderBottom: "1px solid #333",
         fontSize: "18px",
-
-        // ⭐ 分开写 padding，不用 shorthand
         paddingTop: "10px",
         paddingBottom: "10px",
-
-        // ⭐ 横向滚动
         overflowX: "auto",
         whiteSpace: "nowrap",
         WebkitOverflowScrolling: "touch",
-
-        // 隐藏滚动条
         scrollbarWidth: "none",
         msOverflowStyle: "none",
       }}
@@ -60,8 +51,6 @@ export default function Navbar() {
           display: "inline-flex",
           alignItems: "center",
           gap: "25px",
-
-          // ⭐ 改用 paddingLeft/right，不与 nav 冲突
           paddingLeft: "20px",
           paddingRight: "20px",
         }}
@@ -73,10 +62,7 @@ export default function Navbar() {
             color: pathname === "/" ? "#d4af37" : "white",
             fontWeight: pathname === "/" ? "bold" : "normal",
             textDecoration: "none",
-            borderBottom:
-              pathname === "/"
-                ? "3px solid #d4af37"
-                : "3px solid transparent",
+            borderBottom: pathname === "/" ? "3px solid #d4af37" : "3px solid transparent",
             paddingBottom: "4px",
           }}
         >
@@ -87,7 +73,7 @@ export default function Navbar() {
 
         {/* 左手 / 右手 */}
         {hands.map((hand) => {
-          const active = hand === currentHand;
+          const active = hand === currentHand && !pathname.startsWith("/events") && !pathname.startsWith("/about_us");
           return (
             <Link
               key={hand}
@@ -97,9 +83,7 @@ export default function Navbar() {
                 fontWeight: active ? "bold" : "normal",
                 textDecoration: "none",
                 paddingBottom: "4px",
-                borderBottom: active
-                  ? "3px solid #d4af37"
-                  : "3px solid transparent",
+                borderBottom: active ? "3px solid #d4af37" : "3px solid transparent",
               }}
             >
               {hand === "left" ? "左手" : "右手"}
@@ -111,7 +95,7 @@ export default function Navbar() {
 
         {/* 体重级 */}
         {weights.map((w) => {
-          const active = w === currentWeight;
+          const active = w === currentWeight && !pathname.startsWith("/events") && !pathname.startsWith("/about_us");
           return (
             <Link
               key={w}
@@ -121,34 +105,43 @@ export default function Navbar() {
                 fontWeight: active ? "bold" : "normal",
                 textDecoration: "none",
                 paddingBottom: "4px",
-                borderBottom: active
-                  ? "3px solid #d4af37"
-                  : "3px solid transparent",
+                borderBottom: active ? "3px solid #d4af37" : "3px solid transparent",
               }}
             >
               {weightDisplay[w]}
             </Link>
           );
         })}
+
+        <span style={{ color: "#444" }}>|</span>
+
         {/* 赛事按钮 */}
-<Link
-  href="/events"
-  style={{
-    color: pathname.startsWith("/events") ? "#d4af37" : "white",
-    fontWeight: pathname.startsWith("/events") ? "bold" : "normal",
-    textDecoration: "none",
-    borderBottom:
-      pathname.startsWith("/events")
-        ? "3px solid #d4af37"
-        : "3px solid transparent",
-    paddingBottom: "4px",
-  }}
->
-  赛事
-</Link>
+        <Link
+          href="/events"
+          style={{
+            color: pathname.startsWith("/events") ? "#d4af37" : "white",
+            fontWeight: pathname.startsWith("/events") ? "bold" : "normal",
+            textDecoration: "none",
+            borderBottom: pathname.startsWith("/events") ? "3px solid #d4af37" : "3px solid transparent",
+            paddingBottom: "4px",
+          }}
+        >
+          赛事
+        </Link>
 
-<span style={{ color: "#444" }}>|</span>
-
+        {/* ⭐ 新增：关于我们 */}
+        <Link
+          href="/about_us"
+          style={{
+            color: pathname.startsWith("/about_us") ? "#ff0004" : "white", // 选中时用品牌红
+            fontWeight: pathname.startsWith("/about_us") ? "bold" : "normal",
+            textDecoration: "none",
+            borderBottom: pathname.startsWith("/about_us") ? "3px solid #ff0004" : "3px solid transparent",
+            paddingBottom: "4px",
+          }}
+        >
+          关于我们
+        </Link>
       </div>
     </nav>
   );

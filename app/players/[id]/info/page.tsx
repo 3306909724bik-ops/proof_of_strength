@@ -20,7 +20,7 @@ const weightName: Record<Weight, string> = {
 // 勋章背景色
 const medalColors: Record<number, string> = {
   1: "#ff0000", // 冠军 红
-  2: "#d4af37", // 亚军 金
+  2: "#FFD700", // 亚军 金
   3: "#C0C0C0", // 季军 银
   4: "#cd7f32", // 殿军 铜
 };

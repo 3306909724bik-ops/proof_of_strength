@@ -9,22 +9,23 @@ function getPlayerName(id: string) {
 }
 
 export default function POS1Page() {
-  // 仅选择属于 pos1 的比赛
   const eventMatches = matches.filter((m) => m.event === "pos1");
 
   return (
     <div
       style={{
-        paddingTop: "200px",
+        paddingTop: "180px",
+        paddingBottom: "100px",
         minHeight: "100vh",
-        background: "#2e2828ff", // ⭐ 你的红色背景
+        background: "#2e2828ff",
         color: "#ffffff",
         textAlign: "center",
+        fontFamily: "'Inter', sans-serif",
       }}
     >
-      {/* ⭐ 用你的 POS1 按钮图片替代标题 */}
+      {/* Banner */}
       <img
-        src="/pos1_event_button.jpg" // ← 你需要放在 public 文件夹
+        src="/pos1_event_button.jpg"
         alt="POS1 Event Banner"
         style={{
           width: "700px",
@@ -32,17 +33,17 @@ export default function POS1Page() {
           height: "auto",
           margin: "0 auto 60px auto",
           display: "block",
-          borderRadius: "14px",
+          borderRadius: "8px",
           boxShadow: "0 8px 22px rgba(0,0,0,0.35)",
         }}
       />
 
-      {/* ⭐ 卡片容器 */}
+      {/* 卡片容器 */}
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
-          gap: "24px",
+          gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))",
+          gap: "40px 20px",
           maxWidth: "1200px",
           margin: "0 auto",
           padding: "0 20px",
@@ -53,21 +54,97 @@ export default function POS1Page() {
             key={m.id}
             href={`/events/pos1/match/${m.id}`}
             style={{
-              background: "#ff0000ff",
-              padding: "20px",
-              borderRadius: "16px",
-              color: "#000",
-              fontWeight: 600,
-              boxShadow: "0 6px 14px rgba(0,0,0,0.32)",
+              // 微圆角
+              borderRadius: "8px",
+              
+              // 纯实心红背景
+              background: "#e60000", 
+              border: "1px solid #990000", 
+              
+              // 布局
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              
+              // 高大尺寸
+              padding: "55px 20px",
+              
               textDecoration: "none",
-              transition: "0.2s",
+              color: "white",
+              boxShadow: "0 6px 15px rgba(0,0,0,0.5)",
+              transition: "transform 0.2s, box-shadow 0.2s, background 0.2s",
+              position: "relative",
+              overflow: "hidden",
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.04)")}
-            onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1.0)")}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "translateY(-6px)";
+              e.currentTarget.style.boxShadow = "0 20px 40px rgba(0, 0, 0, 0.6)";
+              e.currentTarget.style.background = "#ff1a1a";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.boxShadow = "0 6px 15px rgba(0,0,0,0.5)";
+              e.currentTarget.style.background = "#e60000";
+            }}
           >
-            <div style={{ fontSize: "22px", marginBottom: "12px" }}>
-              {getPlayerName(m.player1)} <br /> VS <br /> {getPlayerName(m.player2)}
+            {/* 左侧选手 */}
+            <div style={{ 
+              flex: 1, 
+              textAlign: "right", 
+              fontSize: "30px", 
+              fontWeight: "800",
+              color: "black",
+              letterSpacing: "1px",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis"
+            }}>
+              {getPlayerName(m.player1)}
             </div>
+
+            {/* 中间 VS：阴影收敛 */}
+            <div
+              style={{
+                flex: "0 0 60px", 
+                textAlign: "center",
+                fontSize: "24px", 
+                fontWeight: "900", 
+                fontStyle: "italic", 
+                color: "#000", 
+                lineHeight: "1",
+                // ⭐ 修改点：扩散半径从 15px 减少到 5px，更紧致、清晰
+                textShadow: "0 0 5px rgba(0,0,0,0.85)", 
+                transform: "skew(-12deg)",
+                margin: "0 5px",
+                zIndex: 2,
+              }}
+            >
+              VS
+            </div>
+
+            {/* 右侧选手 */}
+            <div style={{ 
+              flex: 1, 
+              textAlign: "left", 
+              fontSize: "30px", 
+              fontWeight: "800",
+              color: "black",
+              letterSpacing: "1px",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis"
+            }}>
+              {getPlayerName(m.player2)}
+            </div>
+            
+            {/* 装饰线 */}
+            <div style={{
+                position: "absolute",
+                top: 0, left: "50%", bottom: 0, width: "2px",
+                background: "rgba(0,0,0,0.15)",
+                transform: "skew(-12deg)"
+            }} />
+
           </Link>
         ))}
       </div>

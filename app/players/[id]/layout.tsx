@@ -2,13 +2,12 @@
 
 import Link from "next/link";
 import { players, rankings } from "@/app/lib/data";
-import { useSearchParams, useParams, usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useSearchParams, useParams, usePathname, useRouter } from "next/navigation";
 
 // 排名颜色映射
 const rankColors: Record<number, string> = {
   1: "#ff0004ff",
-  2: "#d4af37",
+  2: "#FFD700",
   3: "#C0C0C0",
   4: "#cd7f32",
 };
@@ -30,6 +29,8 @@ export default function PlayerLayout({ children }: { children: React.ReactNode }
   const { id } = useParams();
   const search = useSearchParams();
   const pathname = usePathname();
+  // ⭐ 引入 router
+  const router = useRouter();
 
   const hand = search.get("hand") ?? "right";
   const weight = search.get("weight") ?? "open";
@@ -40,42 +41,9 @@ export default function PlayerLayout({ children }: { children: React.ReactNode }
   const bestRank = getBestRank(player.id);
   const nameBg = bestRank <= 4 ? rankColors[bestRank] : "#fde8c8";
 
-  // ------------------------------------------------------------
-  // ⭐ 新的 — 来源栈 (stack)
-  // ------------------------------------------------------------
-  const [returnUrl, setReturnUrl] = useState<string>("");
-
-  useEffect(() => {
-    const ref = document.referrer;
-    const isPlayerPage = ref.includes("/players/");
-    
-    // 读取来源栈
-    const stackJson = sessionStorage.getItem("playerBackStack");
-    const stack: string[] = stackJson ? JSON.parse(stackJson) : [];
-
-    // 若来源不是 player 子页面，则 push 到栈
-    if (ref && !isPlayerPage) {
-      stack.push(ref);
-      sessionStorage.setItem("playerBackStack", JSON.stringify(stack));
-    }
-
-    // 返回时取栈顶
-    const top = stack.length > 0 ? stack[stack.length - 1] : `/${hand}/${weight}`;
-    setReturnUrl(top);
-  }, []);
-
-  // 点击返回按钮 → 弹出栈顶
+  // ⭐ 新的返回逻辑：直接调用浏览器的后退
   const handleBack = () => {
-    const stackJson = sessionStorage.getItem("playerBackStack");
-    const stack: string[] = stackJson ? JSON.parse(stackJson) : [];
-
-    if (stack.length > 0) {
-      const last = stack.pop();
-      sessionStorage.setItem("playerBackStack", JSON.stringify(stack));
-      window.location.href = last!;  // 跳回来源
-    } else {
-      window.location.href = `/${hand}/${weight}`;
-    }
+    router.back();
   };
 
   return (
@@ -92,7 +60,7 @@ export default function PlayerLayout({ children }: { children: React.ReactNode }
       }}
     >
 
-      {/* ← 返回按钮（使用 handleBack） */}
+      {/* ← 返回按钮 */}
       <button
         onClick={handleBack}
         style={{
@@ -104,7 +72,10 @@ export default function PlayerLayout({ children }: { children: React.ReactNode }
           border: "none",
           cursor: "pointer",
           marginBottom: "20px",
+          transition: "opacity 0.2s",
         }}
+        onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
+        onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
       >
         ← 返回
       </button>
@@ -152,6 +123,10 @@ export default function PlayerLayout({ children }: { children: React.ReactNode }
             return (
               <Link
                 key={t.key}
+                // ⭐ 关键修改：添加 replace 属性
+                // 这意味着点击 Tab 不会增加历史记录栈
+                // 点击“返回”时会直接跳出选手页面，而不是回到上一个 Tab
+                replace 
                 href={`/players/${id}/${t.key}?hand=${hand}&weight=${weight}`}
                 style={{
                   padding: "8px 14px",
