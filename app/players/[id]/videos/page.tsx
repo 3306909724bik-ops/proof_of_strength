@@ -44,69 +44,94 @@ export default function VideosPage() {
               overflow: "hidden",
               boxShadow: "0 4px 12px rgba(0,0,0,0.10)",
               transition: "0.25s",
-              cursor: "pointer",
+              // cursor: "pointer", // 移除整个卡片的点击，避免误触 iframe
+              display: "flex",
+              flexDirection: "column",
             }}
-            onClick={() => window.open(m.video, "_blank")}
             onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "scale(1.03)";
-              e.currentTarget.style.boxShadow = "0 6px 18px rgba(0,0,0,0.15)";
+              e.currentTarget.style.transform = "translateY(-5px)"; // 悬浮上浮效果
+              e.currentTarget.style.boxShadow = "0 8px 20px rgba(0,0,0,0.15)";
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "scale(1)";
+              e.currentTarget.style.transform = "translateY(0)";
               e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.10)";
             }}
           >
-            {/* 自动封面（使用 video 截取第一帧） */}
-            <video
-              src={m.video}
-              preload="metadata"
-              muted
+            {/* 📺 B站播放器嵌入 (自动显示 B站封面) */}
+            <div
               style={{
                 width: "100%",
-                height: "180px",
-                objectFit: "cover",
-                backgroundColor: "#ddd",
-                display: "block",
+                paddingTop: "56.25%", // 16:9 比例
+                position: "relative",
+                background: "#000",
               }}
-              onLoadedMetadata={(e) => {
-                // 自动跳到第 1 秒形成封面
-                e.currentTarget.currentTime = 1;
-              }}
-              onLoadedData={(e) => {
-                // 加载完封面后暂停显示
-                e.currentTarget.pause();
-              }}
-            />
-
-            {/* 内容区域 */}
-            <div style={{ padding: "15px" }}>
-              <div
+            >
+              <iframe
+                src={`//player.bilibili.com/player.html?bvid=${m.video}&page=1&high_quality=1&danmaku=0`}
+                allowFullScreen={true}
+                scrolling="no"
+                frameBorder="0"
                 style={{
-                  fontSize: "18px",
-                  fontWeight: 700,
-                  marginBottom: "6px",
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
                 }}
-              >
-                {self?.name} vs {opponent?.name ?? "未知选手"}
+              />
+            </div>
+
+            {/* 📝 内容区域 */}
+            <div
+              style={{
+                padding: "15px",
+                flex: 1, // 让内容区撑满剩余空间
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+              }}
+            >
+              <div>
+                <div
+                  style={{
+                    fontSize: "18px",
+                    fontWeight: 700,
+                    marginBottom: "8px",
+                    color: "#333",
+                  }}
+                >
+                  {self?.name} <span style={{ color: "#e74c3c" }}>VS</span>{" "}
+                  {opponent?.name ?? "未知选手"}
+                </div>
+
+                <div style={{ fontSize: "14px", color: "#666", marginBottom: "12px" }}>
+                  📅 比赛日期：{m.date}
+                </div>
               </div>
 
-              <div style={{ fontSize: "15px", marginBottom: "12px" }}>
-                比赛日期：{m.date}
-              </div>
-
-              {/* play 按钮 */}
-              <div
+              {/* 🔗 跳转到 B站观看按钮 */}
+              <a
+                href={`https://www.bilibili.com/video/${m.video}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 style={{
                   display: "inline-block",
-                  padding: "8px 14px",
-                  background: "#d35400",
+                  padding: "10px 0",
+                  width: "100%",
+                  textAlign: "center",
+                  background: "#fb7299", // B站粉色
                   color: "#fff",
                   borderRadius: "8px",
                   fontSize: "14px",
+                  fontWeight: 600,
+                  textDecoration: "none",
+                  transition: "background 0.2s",
                 }}
+                onMouseEnter={(e) => (e.currentTarget.style.background = "#f45a8d")}
+                onMouseLeave={(e) => (e.currentTarget.style.background = "#fb7299")}
               >
-                ▶ 播放视频
-              </div>
+                🚀 去 Bilibili 观看
+              </a>
             </div>
           </div>
         );

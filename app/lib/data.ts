@@ -134,7 +134,7 @@ export const matches: Match[] = [
     format: "5局3胜",
     winner: "8",
     score: "0-3",
-    video: "",
+    video: "BV11YmkB2EuV",
   },
 
   // ② 田振 vs 比小迪｜右手｜2-0（田振胜）
@@ -149,7 +149,7 @@ export const matches: Match[] = [
     format: "3局2胜",
     winner: "38", // 更新为 田振 (38)
     score: "2-0",
-    video: "",
+    video: "BV11amkB7Emd",
   },
 
   // ③ 小果 vs 小杜｜右手｜4-1（小果胜）
@@ -164,7 +164,7 @@ export const matches: Match[] = [
     format: "5局3胜",
     winner: "5",
     score: "4-1",
-    video: "",
+    video: "BV1K8mkBSEvf",
   },
 
   // ④ 程宽 vs 小果｜左手｜3-1（程宽胜）
@@ -179,7 +179,7 @@ export const matches: Match[] = [
     format: "5局3胜",
     winner: "8",
     score: "3-1",
-    video: "",
+    video: "BV1A9mzBiEFL",
   },
 
   // ⑤ 春风 vs 华哥｜右手｜3-0（春风胜）
@@ -194,7 +194,7 @@ export const matches: Match[] = [
     format: "5局3胜",
     winner: "35",
     score: "3-0",
-    video: "",
+    video: "BV128mkBUEnr",
   },
 
   // ⑥ 春风 vs 熊神｜左手｜1-3（熊神胜）
@@ -209,7 +209,7 @@ export const matches: Match[] = [
     format: "5局3胜",
     winner: "36",
     score: "1-3",
-    video: "",
+    video: "BV1cdmzBNEoS",
   },
 
   // ⑦ 周行 vs 周仓｜右手｜3-0（周行胜）
