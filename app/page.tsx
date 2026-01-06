@@ -2,8 +2,11 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useLanguage } from "@/app/context/LanguageContext"; // 1. 引入
 
 export default function Home() {
+  const { lang } = useLanguage(); // 2. 获取语言状态
+  
   // --------------------------
   // ⏳ 倒计时逻辑
   // --------------------------
@@ -15,8 +18,13 @@ export default function Home() {
       const now = Date.now();
       const diff = target - now;
 
+      // 3. 根据语言定义时间单位
+      const units = lang === 'zh' 
+        ? { d: "天", h: "小时", m: "分钟", s: "秒", end: "赛事已开始！" }
+        : { d: "d", h: "h", m: "m", s: "s", end: "Event Started!" };
+
       if (diff <= 0) {
-        setTimeLeft("赛事已开始！");
+        setTimeLeft(units.end);
         return;
       }
 
@@ -25,14 +33,14 @@ export default function Home() {
       const minutes = Math.floor((diff / (1000 * 60)) % 60);
       const seconds = Math.floor((diff / 1000) % 60);
 
-      setTimeLeft(`${days}天 ${hours}小时 ${minutes}分钟 ${seconds}秒`);
+      setTimeLeft(`${days}${units.d} ${hours}${units.h} ${minutes}${units.m} ${seconds}${units.s}`);
     }
 
     updateCountdown();
     const timer = setInterval(updateCountdown, 1000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [lang]); // 4. 添加 lang 依赖，切换语言时自动刷新文字
 
   // --------------------------
   // 页面布局
@@ -80,7 +88,9 @@ export default function Home() {
           textShadow: "0px 0px 6px rgba(0,0,0,0.4)",
         }}
       >
-        {timeLeft === "" ? "加载中…" : `${timeLeft}`}
+        {timeLeft === "" 
+          ? (lang === 'zh' ? "加载中…" : "Loading...") 
+          : timeLeft}
       </div>
 
       {/* ⭐ HomeBanner 右下角固定显示 */}

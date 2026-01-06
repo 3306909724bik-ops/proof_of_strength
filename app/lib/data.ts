@@ -8,12 +8,15 @@ export type Weight = "65kg" | "75kg" | "85kg" | "open";
 
 /**
  * 选手接口
+ * 新增 nameEn 和 cityEn 用于国际化
  */
 export interface Player {
   id: string;
   name: string;
+  nameEn: string; // 英文名
   country: string;
   city: string;
+  cityEn: string; // 英文城市
 }
 
 /**
@@ -35,46 +38,47 @@ export interface Match {
 
 /**
  * 选手数据
+ * 已补充英文名和英文城市
  */
 export const players: Player[] = [
-  { id: "1", name: "小凯", country: "中国", city: "南昌" },
-  { id: "2", name: "阿杰", country: "中国", city: "南昌" },
-  { id: "3", name: "小杜", country: "中国", city: "南昌" },
-  { id: "4", name: "柯智贤", country: "中国", city: "海南" },
-  { id: "5", name: "小果", country: "中国", city: "南昌" },
-  { id: "6", name: "潘文兵", country: "中国", city: "婺源" },
-  { id: "7", name: "徐日成", country: "中国", city: "南昌" },
-  { id: "8", name: "程宽", country: "中国", city: "南昌" },
-  { id: "9", name: "张近立", country: "中国", city: "南昌" },
-  { id: "10", name: "杨鹏", country: "中国", city: "南昌" },
-  { id: "11", name: "齐宪凡", country: "中国", city: "南昌" },
-  { id: "12", name: "小龙包", country: "中国", city: "南昌" },
-  { id: "13", name: "江科亮", country: "中国", city: "南昌" },
-  { id: "14", name: "吴显林", country: "中国", city: "南昌" },
-  { id: "15", name: "乌兰发", country: "中国", city: "南昌" },
-  { id: "16", name: "项龙", country: "中国", city: "南昌" },
-  { id: "17", name: "程鑫", country: "中国", city: "南昌" },
-  { id: "18", name: "胡含旭", country: "中国", city: "九江" },
-  { id: "19", name: "马超", country: "中国", city: "南昌" },
-  { id: "20", name: "梁健平", "country": "中国", "city": "南昌" },
-  { id: "21", name: "徐江顺", country: "中国", city: "九江" },
-  { id: "22", name: "朱志霖", country: "中国", city: "南昌" },
-  { id: "23", name: "叶若", country: "中国", city: "南昌" },
-  { id: "24", name: "张文毅", country: "中国", city: "南昌" },
-  { id: "25", name: "朱军强", country: "中国", city: "南昌" },
-  { id: "26", name: "李林炜", country: "中国", city: "九江" },
-  { id: "27", name: "姚庚飞", country: "中国", city: "南昌" },
-  { id: "28", name: "子俊", country: "中国", city: "南昌" },
-  { id: "29", name: "短神", country: "中国", city: "南昌" },
-  { id: "30", name: "周行", country: "中国", city: "南昌" },
-  { id: "31", name: "周先生", country: "中国", city: "南昌" },
-  { id: "32", name: "舒保林", country: "中国", city: "南昌" },
-  { id: "33", name: "斗腕仙道", country: "中国", city: "南昌" },
-  { id: "34", name: "华哥", country: "中国", city: "南昌" },
-  { id: "35", name: "望春风", country: "中国", city: "南昌" },
-  { id: "36", name: "熊逸鸣", country: "中国", city: "南昌" },
-  { id: "37", name: "周仓", country: "中国", city: "南昌" },
-  { id: "38", name: "田振", country: "中国", city: "常德" },
+  { id: "1", name: "小凯", nameEn: "Xiao Kai", country: "中国", city: "南昌", cityEn: "Nanchang" },
+  { id: "2", name: "阿杰", nameEn: "A Jie", country: "中国", city: "南昌", cityEn: "Nanchang" },
+  { id: "3", name: "小杜", nameEn: "Xiao Du", country: "中国", city: "南昌", cityEn: "Nanchang" },
+  { id: "4", name: "柯智贤", nameEn: "Ke Zhixian", country: "中国", city: "海南", cityEn: "Hainan" },
+  { id: "5", name: "小果", nameEn: "Xiao Guo", country: "中国", city: "南昌", cityEn: "Nanchang" },
+  { id: "6", name: "潘文兵", nameEn: "Pan Wenbing", country: "中国", city: "婺源", cityEn: "Wuyuan" },
+  { id: "7", name: "徐日成", nameEn: "Xu Richeng", country: "中国", city: "南昌", cityEn: "Nanchang" },
+  { id: "8", name: "程宽", nameEn: "Cheng Kuan", country: "中国", city: "南昌", cityEn: "Nanchang" },
+  { id: "9", name: "张近立", nameEn: "Zhang Jinli", country: "中国", city: "南昌", cityEn: "Nanchang" },
+  { id: "10", name: "杨鹏", nameEn: "Yang Peng", country: "中国", city: "南昌", cityEn: "Nanchang" },
+  { id: "11", name: "齐宪凡", nameEn: "Qi Xianfan", country: "中国", city: "南昌", cityEn: "Nanchang" },
+  { id: "12", name: "小龙包", nameEn: "Xiao Longbao", country: "中国", city: "南昌", cityEn: "Nanchang" },
+  { id: "13", name: "江科亮", nameEn: "Jiang Keliang", country: "中国", city: "南昌", cityEn: "Nanchang" },
+  { id: "14", name: "吴显林", nameEn: "Wu Xianlin", country: "中国", city: "南昌", cityEn: "Nanchang" },
+  { id: "15", name: "乌兰发", nameEn: "Wu Lanfa", country: "中国", city: "南昌", cityEn: "Nanchang" },
+  { id: "16", name: "项龙", nameEn: "Xiang Long", country: "中国", city: "南昌", cityEn: "Nanchang" },
+  { id: "17", name: "程鑫", nameEn: "Cheng Xin", country: "中国", city: "南昌", cityEn: "Nanchang" },
+  { id: "18", name: "胡含旭", nameEn: "Hu Hanxu", country: "中国", city: "九江", cityEn: "Jiujiang" },
+  { id: "19", name: "马超", nameEn: "Ma Chao", country: "中国", city: "南昌", cityEn: "Nanchang" },
+  { id: "20", name: "梁健平", nameEn: "Liang Jianping", country: "中国", city: "南昌", cityEn: "Nanchang" },
+  { id: "21", name: "徐江顺", nameEn: "Xu Jiangshun", country: "中国", city: "九江", cityEn: "Jiujiang" },
+  { id: "22", name: "朱志霖", nameEn: "Zhu Zhilin", country: "中国", city: "南昌", cityEn: "Nanchang" },
+  { id: "23", name: "叶若", nameEn: "Ye Ruo", country: "中国", city: "南昌", cityEn: "Nanchang" },
+  { id: "24", name: "张文毅", nameEn: "Zhang Wenyi", country: "中国", city: "南昌", cityEn: "Nanchang" },
+  { id: "25", name: "朱军强", nameEn: "Zhu Junqiang", country: "中国", city: "南昌", cityEn: "Nanchang" },
+  { id: "26", name: "李林炜", nameEn: "Li Linwei", country: "中国", city: "九江", cityEn: "Jiujiang" },
+  { id: "27", name: "姚庚飞", nameEn: "Yao Gengfei", country: "中国", city: "南昌", cityEn: "Nanchang" },
+  { id: "28", name: "子俊", nameEn: "Zi Jun", country: "中国", city: "南昌", cityEn: "Nanchang" },
+  { id: "29", name: "短神", nameEn: "Duan Shen", country: "中国", city: "南昌", cityEn: "Nanchang" },
+  { id: "30", name: "周行", nameEn: "Zhou Xing", country: "中国", city: "南昌", cityEn: "Nanchang" },
+  { id: "31", name: "周先生", nameEn: "Mr. Zhou", country: "中国", city: "南昌", cityEn: "Nanchang" },
+  { id: "32", name: "舒保林", nameEn: "Shu Baolin", country: "中国", city: "南昌", cityEn: "Nanchang" },
+  { id: "33", name: "斗腕仙道", nameEn: "Dou Wan Xian Dao", country: "中国", city: "南昌", cityEn: "Nanchang" },
+  { id: "34", name: "华哥", nameEn: "Brother Hua", country: "中国", city: "南昌", cityEn: "Nanchang" },
+  { id: "35", name: "望春风", nameEn: "Wang Chunfeng", country: "中国", city: "南昌", cityEn: "Nanchang" },
+  { id: "36", name: "熊逸鸣", nameEn: "Xiong Yiming", country: "中国", city: "南昌", cityEn: "Nanchang" },
+  { id: "37", name: "周仓", nameEn: "Zhou Cang", country: "中国", city: "南昌", cityEn: "Nanchang" },
+  { id: "38", name: "田振", nameEn: "Tian Zhen", country: "中国", city: "常德", cityEn: "Changde" },
 ];
 
 
@@ -251,6 +255,6 @@ export function getMatchById(id: string) {
 }
 
 /*git add .*/
-/*git commit -m "update ]"*/
+/*git commit -m "update"*/
 /*git push*/
 

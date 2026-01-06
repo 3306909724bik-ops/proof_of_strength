@@ -2,14 +2,18 @@
 
 import Link from "next/link";
 import { matches, players } from "@/app/lib/data";
-
-// 工具：根据 id 找选手名字
-function getPlayerName(id: string) {
-  return players.find((p) => p.id === id)?.name ?? "未知选手";
-}
+import { useLanguage } from "@/app/context/LanguageContext"; // 1. 引入
 
 export default function POS1Page() {
   const eventMatches = matches.filter((m) => m.event === "pos1");
+  const { lang } = useLanguage(); // 2. 获取语言
+
+  // 工具：根据 id 找选手名字 (支持中英切换)
+  function getPlayerName(id: string) {
+    const p = players.find((p) => p.id === id);
+    if (!p) return lang === 'zh' ? "未知选手" : "Unknown";
+    return lang === 'zh' ? p.name : p.nameEn;
+  }
 
   return (
     <div
@@ -54,21 +58,13 @@ export default function POS1Page() {
             key={m.id}
             href={`/events/pos1/match/${m.id}`}
             style={{
-              // 微圆角
               borderRadius: "8px",
-              
-              // 纯实心红背景
               background: "#e60000", 
               border: "1px solid #990000", 
-              
-              // 布局
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-              
-              // 高大尺寸
               padding: "55px 20px",
-              
               textDecoration: "none",
               color: "white",
               boxShadow: "0 6px 15px rgba(0,0,0,0.5)",
@@ -102,7 +98,7 @@ export default function POS1Page() {
               {getPlayerName(m.player1)}
             </div>
 
-            {/* 中间 VS：阴影收敛 */}
+            {/* 中间 VS */}
             <div
               style={{
                 flex: "0 0 60px", 
@@ -112,7 +108,6 @@ export default function POS1Page() {
                 fontStyle: "italic", 
                 color: "#000", 
                 lineHeight: "1",
-                // ⭐ 修改点：扩散半径从 15px 减少到 5px，更紧致、清晰
                 textShadow: "0 0 5px rgba(0,0,0,0.85)", 
                 transform: "skew(-12deg)",
                 margin: "0 5px",

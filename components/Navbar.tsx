@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useLanguage } from "@/app/context/LanguageContext"; // 1. 引入
 
 const weightDisplay: Record<string, string> = {
   "65kg": "65kg",
@@ -12,6 +13,7 @@ const weightDisplay: Record<string, string> = {
 
 export default function Navbar() {
   const pathname = usePathname();
+  const { t, lang, toggleLanguage } = useLanguage(); // 2. 获取上下文
 
   const hands = ["left", "right"];
   const weights = ["65kg", "75kg", "85kg", "open"];
@@ -66,7 +68,7 @@ export default function Navbar() {
             paddingBottom: "4px",
           }}
         >
-          首页
+          {t("nav_home")} {/* 替换文字 */}
         </Link>
 
         <span style={{ color: "#444" }}>|</span>
@@ -86,7 +88,10 @@ export default function Navbar() {
                 borderBottom: active ? "3px solid #d4af37" : "3px solid transparent",
               }}
             >
-              {hand === "left" ? "左手" : "右手"}
+              {/* 根据当前语言显示 "左手" 或 "LEFT ARM" */}
+              {lang === 'zh' 
+                ? (hand === "left" ? "左手" : "右手") 
+                : (hand === "left" ? "LEFT" : "RIGHT")}
             </Link>
           );
         })}
@@ -108,7 +113,10 @@ export default function Navbar() {
                 borderBottom: active ? "3px solid #d4af37" : "3px solid transparent",
               }}
             >
-              {weightDisplay[w]}
+              {/* 体重显示逻辑：Open显示无差别/OPEN，数字保持不变 */}
+              {w === 'open' 
+                 ? t('nav_open') 
+                 : w}
             </Link>
           );
         })}
@@ -126,22 +134,42 @@ export default function Navbar() {
             paddingBottom: "4px",
           }}
         >
-          赛事
+          {t("nav_match")}
         </Link>
 
-        {/* ⭐ 新增：关于我们 */}
+        {/* 关于我们 */}
         <Link
           href="/about_us"
           style={{
-            color: pathname.startsWith("/about_us") ? "#ff0004" : "white", // 选中时用品牌红
+            color: pathname.startsWith("/about_us") ? "#ff0004" : "white",
             fontWeight: pathname.startsWith("/about_us") ? "bold" : "normal",
             textDecoration: "none",
             borderBottom: pathname.startsWith("/about_us") ? "3px solid #ff0004" : "3px solid transparent",
             paddingBottom: "4px",
           }}
         >
-          关于我们
+          {t("nav_about")}
         </Link>
+
+        {/* 🌍 语言切换按钮 (新增) */}
+        <button
+          onClick={toggleLanguage}
+          style={{
+            marginLeft: "10px",
+            background: "transparent",
+            border: "1px solid rgba(255,255,255,0.3)",
+            color: "#fff",
+            padding: "2px 8px",
+            borderRadius: "4px",
+            cursor: "pointer",
+            fontSize: "12px",
+            fontWeight: "bold",
+            transition: "0.2s"
+          }}
+        >
+          {t("nav_switch_lang")}
+        </button>
+
       </div>
     </nav>
   );

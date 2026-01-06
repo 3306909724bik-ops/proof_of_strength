@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { players, rankings } from "@/app/lib/data";
 import { useSearchParams, useParams, usePathname, useRouter } from "next/navigation";
+import { useLanguage } from "@/app/context/LanguageContext"; // 1. 引入
 
 // 排名颜色映射
 const rankColors: Record<number, string> = {
@@ -29,22 +30,31 @@ export default function PlayerLayout({ children }: { children: React.ReactNode }
   const { id } = useParams();
   const search = useSearchParams();
   const pathname = usePathname();
-  // ⭐ 引入 router
   const router = useRouter();
+  const { lang } = useLanguage(); // 2. 获取语言状态
 
   const hand = search.get("hand") ?? "right";
   const weight = search.get("weight") ?? "open";
 
   const player = players.find((p) => p.id === id);
-  if (!player) return <div>未找到选手。</div>;
+  
+  if (!player) {
+    return <div>{lang === 'zh' ? "未找到选手。" : "Player not found."}</div>;
+  }
 
   const bestRank = getBestRank(player.id);
   const nameBg = bestRank <= 4 ? rankColors[bestRank] : "#fde8c8";
 
-  // ⭐ 新的返回逻辑：直接调用浏览器的后退
   const handleBack = () => {
     router.back();
   };
+
+  // 3. 定义 Tabs 的多语言内容
+  const tabs = [
+    { key: "info", label: lang === 'zh' ? "个人信息" : "Profile" },
+    { key: "matches", label: lang === 'zh' ? "战绩查询" : "Matches" },
+    { key: "videos", label: lang === 'zh' ? "比赛回放" : "Replays" },
+  ];
 
   return (
     <div
@@ -77,7 +87,7 @@ export default function PlayerLayout({ children }: { children: React.ReactNode }
         onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
         onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
       >
-        ← 返回
+        ← {lang === 'zh' ? "返回" : "Back"}
       </button>
 
       {/* 顶部名字条 */}
@@ -97,7 +107,8 @@ export default function PlayerLayout({ children }: { children: React.ReactNode }
           marginBottom: "18px",
         }}
       >
-        {player.name}
+        {/* 4. 名字支持中英切换 */}
+        {lang === 'zh' ? player.name : player.nameEn}
       </div>
 
       {/* Tabs */}
@@ -114,18 +125,11 @@ export default function PlayerLayout({ children }: { children: React.ReactNode }
         }}
       >
         <div style={{ display: "flex", justifyContent: "space-around" }}>
-          {[
-            { key: "info", label: "个人信息" },
-            { key: "matches", label: "战绩查询" },
-            { key: "videos", label: "比赛回放" },
-          ].map((t) => {
+          {tabs.map((t) => {
             const active = pathname.includes(t.key);
             return (
               <Link
                 key={t.key}
-                // ⭐ 关键修改：添加 replace 属性
-                // 这意味着点击 Tab 不会增加历史记录栈
-                // 点击“返回”时会直接跳出选手页面，而不是回到上一个 Tab
                 replace 
                 href={`/players/${id}/${t.key}?hand=${hand}&weight=${weight}`}
                 style={{

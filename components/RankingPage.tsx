@@ -3,15 +3,11 @@
 import { players, rankings } from "@/app/lib/data";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useLanguage } from "@/app/context/LanguageContext"; // 引入
 
-// ------------------------------------------------------------------
-// 🎨 配置与常量
-// ------------------------------------------------------------------
-
-// 基础字体栈
+// ... 样式常量保持不变 ...
 const fontStack = `-apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif`;
 
-// ⭐ 严格保留你的原始颜色定义
 const rankColors: Record<number, string> = {
   1: "#ff0004ff", // 冠军红
   2: "#FFD700",   // 亚军金
@@ -19,7 +15,6 @@ const rankColors: Record<number, string> = {
   4: "#cd7f32",   // 第四名铜
 };
 
-// 激励语
 const quotes = [
   "勒万为了在二番战击败恶魔斯，每天训练6小时",
   "德文12年夺得世界冠军后重伤，但他花了十年重返世界第二",
@@ -41,18 +36,23 @@ interface Props {
 }
 
 export default function RankingPage({ hand, weight }: Props) {
+  const { t, lang } = useLanguage(); // 获取上下文
+
   const order = rankings[hand][weight];
 
   const data = order
     .map((id) => players.find((p) => p.id === id))
     .filter((p): p is NonNullable<typeof p> => p !== undefined);
 
-  const weightName = {
-    "65kg": "65kg",
-    "75kg": "75kg",
-    "85kg": "85kg",
-    open: "无差别",
-  };
+  // 体重显示：无差别特殊处理
+  const weightName = weight === "open" 
+    ? (lang === 'zh' ? "无差别" : "OPEN") 
+    : weight;
+
+  // 手显示
+  const handName = lang === 'zh'
+    ? (hand === "left" ? "左手" : "右手")
+    : (hand === "left" ? "LEFT" : "RIGHT");
 
   const [quote, setQuote] = useState("");
 
@@ -70,9 +70,7 @@ export default function RankingPage({ hand, weight }: Props) {
         background: "#2e2828ff",
       }}
     >
-      {/* ──────────────────────────────────────────────
-          1. 顶部标题区域
-      ────────────────────────────────────────────── */}
+      {/* 顶部标题区域 */}
       <div style={{ textAlign: "center", marginBottom: "40px" }}>
         <h1
           style={{
@@ -87,10 +85,9 @@ export default function RankingPage({ hand, weight }: Props) {
             filter: "drop-shadow(0px 2px 4px rgba(0,0,0,0.5))",
           }}
         >
-          {hand === "left" ? "左手" : "右手"} · {weightName[weight]}
+          {handName} · {weightName}
         </h1>
         
-        {/* ⭐ 修改 2: 副标题颜色提亮 (从 #888 -> #ccc) */}
         <div
           style={{
             fontSize: "14px",
@@ -101,34 +98,31 @@ export default function RankingPage({ hand, weight }: Props) {
             opacity: 0.9,
           }}
         >
-          - 力之证排行榜 -
+          - Proof of Strength {t('ranking_title_suffix')} -
         </div>
       </div>
 
-      {/* ──────────────────────────────────────────────
-          2. 主体内容区：双栏布局
-      ────────────────────────────────────────────── */}
+      {/* 主体内容区：双栏布局 */}
       <div
         style={{
           display: "flex",
           justifyContent: "center",
           alignItems: "flex-start",
-          maxWidth: "900px", // 稍微加宽容器以适应新卡片背景
+          maxWidth: "900px", 
           margin: "0 auto",
           padding: "0 20px",
           gap: "30px",
         }}
       >
-        {/* === 左侧：排行榜列表 (⭐ 核心修改：添加整体卡片背景) === */}
+        {/* 左侧：排行榜列表 */}
         <div style={{ 
             flex: 1, 
             minWidth: 0,
-            // 新增样式：整体卡片背景容器
-            background: "rgba(255, 255, 255, 0.04)", // 微亮的半透明背景，提升层次感，让内部亮色更跳脱
-            borderRadius: "20px", // 大圆角
-            padding: "30px 25px", // 增加内边距给内容呼吸感
-            boxShadow: "0 10px 30px rgba(0,0,0,0.25)", // 柔和的深色阴影增加浮动感
-            border: "1px solid rgba(255,255,255,0.08)", // 微弱的边框定义边界
+            background: "rgba(255, 255, 255, 0.04)", 
+            borderRadius: "20px", 
+            padding: "30px 25px", 
+            boxShadow: "0 10px 30px rgba(0,0,0,0.25)", 
+            border: "1px solid rgba(255,255,255,0.08)", 
         }}>
           
           {/* 表头 */}
@@ -137,18 +131,16 @@ export default function RankingPage({ hand, weight }: Props) {
               display: "grid",
               gridTemplateColumns: "70px 1fr",
               padding: "0 0 15px 0",
-              borderBottom: "2px solid rgba(255,255,255,0.15)", // 稍微调亮分割线
+              borderBottom: "2px solid rgba(255,255,255,0.15)", 
               marginBottom: "25px",
-              // ⭐ 修改 3: 表头文字颜色提亮 (从 #666 -> #ddd)
               color: "#ddd", 
               fontSize: "13px",
               fontWeight: 800,
               letterSpacing: "1px",
             }}
           >
-            <div style={{ textAlign: "center" }}>排名</div>
-            {/* 名字标题也居中显示 */}
-            <div style={{ textAlign: "center" }}>选手姓名</div>
+            <div style={{ textAlign: "center" }}>{t('ranking_col_rank')}</div>
+            <div style={{ textAlign: "center" }}>{t('ranking_col_name')}</div>
           </div>
 
           {/* 选手列表 */}
@@ -202,14 +194,13 @@ export default function RankingPage({ hand, weight }: Props) {
                       background: bg, 
                       borderRadius: "0 8px 8px 0",
                       display: "flex",
-                      // ⭐ 修改 4: 使用居中对齐
                       justifyContent: "center", 
                       alignItems: "center",
                       padding: "0 20px",
                       marginLeft: "-10px", 
-                      boxShadow: "0 4px 15px rgba(0,0,0,0.15)", // 略微加深阴影
+                      boxShadow: "0 4px 15px rgba(0,0,0,0.15)",
                       transition: "transform 0.2s ease, filter 0.2s ease",
-                      position: "relative", // 开启定位上下文
+                      position: "relative",
                       zIndex: 1,
                     }}
                     onMouseEnter={(e) => {
@@ -221,25 +212,25 @@ export default function RankingPage({ hand, weight }: Props) {
                       e.currentTarget.style.filter = "brightness(1)";
                     }}
                   >
-                    {/* 名字 (居中) */}
+                    {/* 名字 (中英切换) */}
                     <span
                       style={{
                         fontSize: "18px",
                         fontWeight: 900,
                         color: textColor,
                         letterSpacing: "0.5px",
-                        textAlign: "center", // 确保文字居中
-                        width: "100%", // 占满宽度以便居中
+                        textAlign: "center",
+                        width: "100%", 
                       }}
                     >
-                      {p.name}
+                      {lang === 'zh' ? p.name : p.nameEn}
                     </span>
 
-                    {/* ⭐ 修改 5: 城市 (绝对定位到最右侧) */}
+                    {/* 城市 (中英切换) */}
                     <span
                       style={{
                         position: "absolute",
-                        right: "15px", // 固定在右侧
+                        right: "15px", 
                         fontSize: "12px",
                         color: cityColor,
                         background: cityBg,
@@ -248,7 +239,7 @@ export default function RankingPage({ hand, weight }: Props) {
                         fontWeight: 600,
                       }}
                     >
-                      {p.city}
+                      {lang === 'zh' ? p.city : p.cityEn}
                     </span>
                   </Link>
                 </div>
@@ -257,7 +248,7 @@ export default function RankingPage({ hand, weight }: Props) {
           </div>
         </div>
 
-        {/* === 右侧：纵向提示栏 === */}
+        {/* 右侧：纵向提示栏 */}
         <div
           style={{
             width: "40px",
@@ -270,30 +261,29 @@ export default function RankingPage({ hand, weight }: Props) {
             display: "flex",
             alignItems: "center",
             justifyContent: "flex-start",
-            paddingTop: "50px", // 增加顶部padding以对齐新的卡片
-            // borderLeft: "1px solid #555", // 移除分割线，因为左侧现在是卡片了
+            paddingTop: "50px", 
             paddingLeft: "10px",
             height: "auto",
             minHeight: "400px",
           }}
         >
           <span style={{ marginBottom: "20px", color: "#ff0004" }}>●</span>
-          {/* ⭐ 修改 6: 提示语颜色提亮 (更显眼) */}
-          <span style={{ color: "#fff", textShadow: "0 0 10px rgba(255,255,255,0.3)" }}>点击选手名字</span>
-          <span style={{ marginTop: "10px", color: "#FFD700" }}>查看详细信息</span>
+          <span style={{ color: "#fff", textShadow: "0 0 10px rgba(255,255,255,0.3)" }}>
+            {t('ranking_tip_click')}
+          </span>
+          <span style={{ marginTop: "10px", color: "#FFD700" }}>
+             {t('ranking_tip_detail')}
+          </span>
         </div>
       </div>
 
-      {/* ──────────────────────────────────────────────
-          3. 底部激励语
-      ────────────────────────────────────────────── */}
+      {/* 底部激励语 */}
       <div
         style={{
           maxWidth: "600px",
-          // ⭐ 修改 7: 缩小 margin-top (从 80px -> 40px)，让它更靠近列表
           margin: "40px auto 0", 
           position: "relative",
-          padding: "30px 30px", // 稍微减小内边距
+          padding: "30px 30px",
           background: "linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.2) 100%)",
           border: "1px solid rgba(255,255,255,0.08)",
           borderRadius: "16px",

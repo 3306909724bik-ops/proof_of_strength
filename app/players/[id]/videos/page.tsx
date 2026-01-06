@@ -2,12 +2,13 @@
 
 import { matches, players } from "@/app/lib/data";
 import { useParams } from "next/navigation";
-import { useState } from "react"; // 1. 引入 useState
+import { useState } from "react";
+import { useLanguage } from "@/app/context/LanguageContext"; // 引入
 
 export default function VideosPage() {
   const { id } = useParams();
+  const { lang, t } = useLanguage(); // 获取语言
   
-  // 2. 新增状态：记录当前正在全屏播放的 BV 号，如果有值则显示弹窗
   const [playingBvid, setPlayingBvid] = useState<string | null>(null);
 
   const playerMatches = matches.filter(
@@ -17,7 +18,7 @@ export default function VideosPage() {
   if (playerMatches.length === 0) {
     return (
       <div style={{ textAlign: "center", marginTop: "20px", fontSize: "18px" }}>
-        暂无比赛视频
+        {t('video_list_empty')}
       </div>
     );
   }
@@ -39,6 +40,12 @@ export default function VideosPage() {
           const opponent = players.find((p) => p.id === opponentId);
           const self = players.find((p) => p.id === id);
 
+          // 名字中英切换
+          const selfName = self ? (lang === 'zh' ? self.name : self.nameEn) : "";
+          const oppName = opponent 
+            ? (lang === 'zh' ? opponent.name : opponent.nameEn) 
+            : (lang === 'zh' ? "未知选手" : "Unknown");
+
           return (
             <div
               key={m.id}
@@ -50,7 +57,6 @@ export default function VideosPage() {
                 transition: "0.25s",
                 cursor: "pointer",
               }}
-              // 3. 点击卡片时，不再跳转，而是设置当前播放的 BV 号
               onClick={() => setPlayingBvid(m.video)}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = "scale(1.03)";
@@ -61,14 +67,13 @@ export default function VideosPage() {
                 e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.10)";
               }}
             >
-              {/* 4. 封面区域：使用 B站 iframe 作为预览 */}
+              {/* 封面区域 */}
               <div 
                 style={{ 
                   width: "100%", 
                   height: "180px", 
                   position: "relative",
                   background: "#000",
-                  // 关键点：禁止 iframe 的鼠标事件，这样点击会穿透到外层的 div，触发 onClick
                   pointerEvents: "none" 
                 }}
               >
@@ -76,13 +81,8 @@ export default function VideosPage() {
                   src={`//player.bilibili.com/player.html?bvid=${m.video}&page=1&high_quality=1&danmaku=0&autoplay=0`}
                   scrolling="no"
                   frameBorder="0"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    border: "none",
-                  }}
+                  style={{ width: "100%", height: "100%", border: "none" }}
                 />
-                {/* 可选：加一个播放按钮图标在中间，提示用户可以点击放大 */}
                 <div style={{
                     position: "absolute",
                     top: "50%",
@@ -99,33 +99,26 @@ export default function VideosPage() {
 
               {/* 内容区域 */}
               <div style={{ padding: "15px" }}>
-                <div
-                  style={{
-                    fontSize: "18px",
-                    fontWeight: 700,
-                    marginBottom: "6px",
-                    color: "#333"
-                  }}
-                >
-                  {self?.name} <span style={{color:"#e74c3c"}}>VS</span> {opponent?.name ?? "未知选手"}
+                <div style={{ fontSize: "18px", fontWeight: 700, marginBottom: "6px", color: "#333" }}>
+                  {selfName} <span style={{color:"#e74c3c"}}>VS</span> {oppName}
                 </div>
 
                 <div style={{ fontSize: "15px", marginBottom: "12px", color: "#666" }}>
-                  比赛日期：{m.date}
+                  {lang === 'zh' ? "比赛日期：" : "Date: "}{m.date}
                 </div>
 
                 <div
                   style={{
                     display: "inline-block",
                     padding: "8px 14px",
-                    background: "#fb7299", // B站粉色
+                    background: "#fb7299", 
                     color: "#fff",
                     borderRadius: "8px",
                     fontSize: "14px",
                     fontWeight: "bold"
                   }}
                 >
-                  📺 点击放大观看
+                  {t('video_overlay_click')}
                 </div>
               </div>
             </div>
@@ -142,7 +135,7 @@ export default function VideosPage() {
             left: 0,
             width: "100vw",
             height: "100vh",
-            background: "rgba(0, 0, 0, 0.85)", // 深色遮罩
+            background: "rgba(0, 0, 0, 0.85)", 
             zIndex: 9999,
             display: "flex",
             justifyContent: "center",
@@ -150,21 +143,19 @@ export default function VideosPage() {
             padding: "20px",
             backdropFilter: "blur(5px)"
           }}
-          // 点击遮罩关闭弹窗
           onClick={() => setPlayingBvid(null)}
         >
           <div
             style={{
               width: "100%",
-              maxWidth: "1000px", // 最大宽度
-              aspectRatio: "16/9", // 锁定 16:9 比例
+              maxWidth: "1000px", 
+              aspectRatio: "16/9", 
               background: "#000",
               borderRadius: "12px",
               overflow: "hidden",
               position: "relative",
               boxShadow: "0 20px 50px rgba(0,0,0,0.5)",
             }}
-            // 阻止点击播放器时关闭弹窗
             onClick={(e) => e.stopPropagation()}
           >
             {/* 关闭按钮 */}
@@ -193,14 +184,11 @@ export default function VideosPage() {
 
             {/* B站播放器 */}
             <iframe
-              src={`//player.bilibili.com/player.html?bvid=${playingBvid}&page=1&high_quality=1&danmaku=1&autoplay=1`} // 打开时自动播放
+              src={`//player.bilibili.com/player.html?bvid=${playingBvid}&page=1&high_quality=1&danmaku=1&autoplay=1`} 
               allowFullScreen={true}
               scrolling="no"
               frameBorder="0"
-              style={{
-                width: "100%",
-                height: "100%",
-              }}
+              style={{ width: "100%", height: "100%" }}
             />
           </div>
         </div>
