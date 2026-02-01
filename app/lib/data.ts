@@ -79,6 +79,7 @@ export const players: Player[] = [
   { id: "36", name: "熊逸鸣", nameEn: "Xiong Yiming", country: "中国", city: "南昌", cityEn: "Nanchang" },
   { id: "37", name: "周仓", nameEn: "Zhou Cang", country: "中国", city: "南昌", cityEn: "Nanchang" },
   { id: "38", name: "田振", nameEn: "Tian Zhen", country: "中国", city: "常德", cityEn: "Changde" },
+  { id: "39", name: "肖宇杰", nameEn: "Xiao Yujie", country: "中国", city: "吉安", cityEn: "Jian" },
 ];
 
 
@@ -92,7 +93,7 @@ export const rankings: Record<
   left: {
     "65kg": ["8", "11", "3", "12", "13", "14"],
     "75kg": ["1", "19", "8", "5", "2", "20", "17"],
-    "85kg": ["36", "35"],
+    "85kg": ["36", "8","35"],
     "open": ["1", "7", "25", "28", "26", "27", "24", "29"],
   },
   right: {
@@ -110,8 +111,18 @@ export const rankings: Record<
  * 统一 hand 字段为 "left" 或 "right"
  * 简化 format 字段
  */
+// app/lib/data.ts
+
+// ... (前面的 Hand, Weight, Player 接口和 players 数组保持不变) ...
+
+/**
+ * 比赛数据
+ * 包含 pos0, pos1, pos2
+ */
 export const matches: Match[] = [
-  // 示例比赛 (pos0)
+  // ----------------------------------------------------
+  // POS 0 (示例比赛)
+  // ----------------------------------------------------
   {
     id: "0",
     event: "pos0",
@@ -126,12 +137,14 @@ export const matches: Match[] = [
     video: "/videos/XiaoKai_vs_Xuricheng.mp4",
   },
 
-  // ① 周先生 vs 程宽｜右手｜0-3（程宽胜）
+  // ----------------------------------------------------
+  // POS 1 (2025-12-13)
+  // ----------------------------------------------------
   {
     id: "1",
     event: "pos1",
-    player1: "31", // 周先生
-    player2: "8",  // 程宽
+    player1: "31", 
+    player2: "8",  
     date: "2025-12-13",
     weight: "75kg",
     hand: "right",
@@ -140,28 +153,24 @@ export const matches: Match[] = [
     score: "0-3",
     video: "BV11YmkB2EuV",
   },
-
-  // ② 田振 vs 比小迪｜右手｜2-0（田振胜）
   {
     id: "2",
     event: "pos1",
-    player1: "38", // 田振
-    player2: "4",  // 比小迪
+    player1: "38", 
+    player2: "4",  
     date: "2025-12-13",
     weight: "65kg",
     hand: "right",
     format: "3局2胜",
-    winner: "38", // 更新为 田振 (38)
+    winner: "38", 
     score: "2-0",
     video: "BV11amkB7Emd",
   },
-
-  // ③ 小果 vs 小杜｜右手｜4-1（小果胜）
   {
     id: "3",
     event: "pos1",
-    player1: "5", // 小果
-    player2: "3", // 小杜
+    player1: "5", 
+    player2: "3", 
     date: "2025-12-13",
     weight: "75kg",
     hand: "right",
@@ -170,13 +179,11 @@ export const matches: Match[] = [
     score: "4-1",
     video: "BV1K8mkBSEvf",
   },
-
-  // ④ 程宽 vs 小果｜左手｜3-1（程宽胜）
   {
     id: "4",
     event: "pos1",
-    player1: "8", // 程宽
-    player2: "5", // 小果
+    player1: "8", 
+    player2: "5", 
     date: "2025-12-13",
     weight: "75kg",
     hand: "left",
@@ -185,13 +192,11 @@ export const matches: Match[] = [
     score: "3-1",
     video: "BV1A9mzBiEFL",
   },
-
-  // ⑤ 春风 vs 华哥｜右手｜3-0（春风胜）
   {
     id: "5",
     event: "pos1",
-    player1: "35", // 望春风
-    player2: "34", // 华哥
+    player1: "35", 
+    player2: "34", 
     date: "2025-12-13",
     weight: "85kg",
     hand: "right",
@@ -200,13 +205,11 @@ export const matches: Match[] = [
     score: "3-0",
     video: "BV128mkBUEnr",
   },
-
-  // ⑥ 春风 vs 熊神｜左手｜1-3（熊神胜）
   {
     id: "6",
     event: "pos1",
-    player1: "35", // 望春风
-    player2: "36", // 熊逸鸣（熊神）
+    player1: "35", 
+    player2: "36", 
     date: "2025-12-13",
     weight: "85kg",
     hand: "left",
@@ -215,13 +218,11 @@ export const matches: Match[] = [
     score: "1-3",
     video: "BV1cdmzBNEoS",
   },
-
-  // ⑦ 周行 vs 周仓｜右手｜3-0（周行胜）
   {
     id: "7",
     event: "pos1",
-    player1: "30", // 周行
-    player2: "37", // 周仓
+    player1: "30", 
+    player2: "37", 
     date: "2025-12-13",
     weight: "85kg",
     hand: "right",
@@ -230,7 +231,106 @@ export const matches: Match[] = [
     score: "3-0",
     video: "",
   },
+
+  // ----------------------------------------------------
+  // POS 2 (2026-01-31) - 力之证第二届单挑赛
+  // ----------------------------------------------------
+  // 比赛时间：2026年1月31日 15:00
+  // 状态：未开赛 (winner为空，score为0-0)
+  
+  // 第一场：李林炜(26) vs 徐江顺(21) | 无差别 | 左手 | 3局2胜
+  {
+    id: "pos2_1",
+    event: "pos2",
+    player1: "26", // 李林炜
+    player2: "21", // 徐江顺
+    date: "2026-01-31",
+    weight: "open",
+    hand: "left",
+    format: "3局2胜",
+    winner: "",    // 未开赛
+    score: "0-0",  
+    video: "",
+  },
+
+  // 第二场：周先生(31) vs 姚庚飞(27) | 75kg | 右手 | 5局3胜
+  {
+    id: "pos2_2",
+    event: "pos2",
+    player1: "31", // 周先生
+    player2: "27", // 姚庚飞
+    date: "2026-01-31",
+    weight: "75kg",
+    hand: "right",
+    format: "5局3胜",
+    winner: "",
+    score: "0-0",
+    video: "",
+  },
+
+  // 第三场：程宽(8) vs 望春风(35) | 85kg | 左手 | 3局2胜
+  {
+    id: "pos2_3",
+    event: "pos2",
+    player1: "8",  // 程宽
+    player2: "35", // 望春风
+    date: "2026-01-31",
+    weight: "85kg",
+    hand: "left",
+    format: "3局2胜",
+    winner: "8",
+    score: "2-0",
+    video: "",
+  },
+
+  // 第四场：徐江顺(21) vs 徐日成(7) | 85kg | 右手 | 5局3胜
+  // 原文写的是"徐日程"，应该是"徐日成"(ID:7)，体重按85kg算
+  {
+    id: "pos2_4",
+    event: "pos2",
+    player1: "21", // 徐江顺
+    player2: "7",  // 徐日成
+    date: "2026-01-31",
+    weight: "85kg",
+    hand: "right",
+    format: "5局3胜",
+    winner: "7",
+    score: "3-0",
+    video: "",
+  },
+
+  // 第五场：周先生(31) vs 肖宇杰(39) | 75kg | 左手 | 5局3胜
+  {
+    id: "pos2_5",
+    event: "pos2",
+    player1: "31", // 周先生
+    player2: "39", // 肖宇杰
+    date: "2026-01-31",
+    weight: "75kg",
+    hand: "left",
+    format: "5局3胜",
+    winner: "",
+    score: "0-0",
+    video: "",
+  },
+
+  // 第六场：熊神(36) vs 小凯(1) | 无差别冠军战 | 左手 | 3局2胜
+  {
+    id: "pos2_6",
+    event: "pos2",
+    player1: "36", // 熊逸鸣
+    player2: "1",  // 小凯
+    date: "2026-01-31",
+    weight: "open",
+    hand: "left",
+    format: "3局2胜",
+    winner: "1",
+    score: "2-0",
+    video: "",
+  },
 ];
+
+// ... (后面的 getPlayerById 和 getMatchById 保持不变) ...
 
 // ----------------------------------------------------
 // ⚙️ 数据获取函数 (为了支持 match/[id]/page.tsx)
